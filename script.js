@@ -30,30 +30,27 @@ function shuffle(array) {
 function createCards() {
     cardValues = generateCardValues();
     var shuffledValues = shuffle(cardValues);
-    gameBoard.innerHTML = ""; // Efface les cartes précédentes
+    gameBoard.innerHTML = "";
     shuffledValues.forEach(function (value) {
         var card = document.createElement("div");
         card.classList.add("card");
         card.setAttribute("data-value", value);
-        card.style.backgroundColor = "lightgray"; // Couleur de base
+        card.style.backgroundColor = "lightgray";
         card.addEventListener("click", flipCard);
         gameBoard.appendChild(card);
     });
 }
 function generateCardValues() {
     var difficulty = difficultySelect.value;
-    var pairs = 4; // Niveau facile par défaut
-    if (difficulty === "medium")
-        pairs = 6; // Niveau moyen
-    else if (difficulty === "hard")
-        pairs = 8; // Niveau difficile
+    var pairs = 4;
+    if (difficulty === "medium") pairs = 6;
+    else if (difficulty === "hard") pairs = 8;
     var selectedColors = colors.slice(0, pairs);
-    return __spreadArray(__spreadArray([], selectedColors, true), selectedColors, true); // Crée des paires de couleurs
+    return __spreadArray(__spreadArray([], selectedColors, true), selectedColors, true);
 }
 function flipCard() {
-    if (lockBoard || this === firstCard)
-        return;
-    this.style.backgroundColor = this.getAttribute("data-value"); // Change la couleur au retour
+    if (lockBoard || this === firstCard) return;
+    this.style.backgroundColor = this.getAttribute("data-value");
     this.classList.add("flipped");
     attempts++;
     if (!firstCard) {
@@ -75,7 +72,7 @@ function checkForMatch() {
     }
 }
 function increaseScore() {
-    score += 10; // 10 points pour chaque paire
+    score += 10;
     scoreDisplay.innerText = "Score : ".concat(score);
     playerTurnDisplay.innerText = "Total Points: ".concat(score, " points");
 }
@@ -86,8 +83,8 @@ function disableCards() {
 }
 function unflipCards() {
     setTimeout(function () {
-        firstCard.style.backgroundColor = "lightgray"; // Remet la couleur de base
-        secondCard.style.backgroundColor = "lightgray"; // Remet la couleur de base
+        firstCard.style.backgroundColor = "lightgray";
+        secondCard.style.backgroundColor = "lightgray";
         resetBoard();
     }, 1500);
 }
@@ -95,35 +92,30 @@ function resetBoard() {
     firstCard = null;
     secondCard = null;
     lockBoard = false;
-    playerTurn = playerTurn === 1 ? 2 : 1; // Change de joueur
+    playerTurn = playerTurn === 1 ? 2 : 1;
     playerTurnDisplay.innerText = "Joueur ".concat(playerTurn, ": ").concat(score, " points");
 }
 function checkGameEnd() {
     var cards = document.querySelectorAll(".card");
     return Array.from(cards).every(function (card) { return card.classList.contains("flipped"); });
 }
-// Affiche l'écran de fin de jeu
 function showEndGameScreen() {
-    endGameDisplay.innerText = "Fin du jeu! Temps \u00E9coul\u00E9 : ".concat(timeElapsed, " secondes, Score final : ").concat(score);
+    endGameDisplay.innerText = "Fin du jeu! Temps écoulé : ".concat(timeElapsed, " secondes, Score final : ").concat(score);
     endGameDisplay.style.display = "block";
 }
-// Recommencer le jeu
 function resetGame() {
     score = 0;
     timeElapsed = 0;
     attempts = 0;
     scoreDisplay.innerText = "Score : ".concat(score);
-    endGameDisplay.style.display = "none"; // Cacher l'écran de fin de jeu
-    createCards(); // Crée de nouvelles cartes
+    endGameDisplay.style.display = "none";
+    createCards();
 }
-// Bouton pour recommencer
 var resetButton = document.createElement("button");
 resetButton.innerText = "Recommencer";
 resetButton.addEventListener("click", resetGame);
 document.body.appendChild(resetButton);
-// Événement pour changer de difficulté
 difficultySelect.addEventListener("change", function () {
     resetGame();
 });
-// Crée le jeu initial
 createCards();
