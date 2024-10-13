@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeu de Mémoire</title>
+    <style>
+        #game-board {
+            display: grid;
+            grid-template-columns: repeat(4, 100px);
+            grid-gap: 10px;
+        }
+        .card {
+            width: 100px;
+            height: 100px;
+            background-color: lightgray;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 24px;
+            transition: background-color 0.5s; /* Ajoute une animation */
+        }
+        #end-game {
+            display: none;
+            font-size: 20px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Jeu de Mémoire</h1>
+    <label for="difficulty">Choisissez la difficulté :</label>
+    <select id="difficulty">
+        <option value="easy">Facile</option>
+        <option value="medium">Moyen</option>
+        <option value="hard">Difficile</option>
+    </select>
+    <div id="score">Score : 0</div>
+    <div id="player-turn">Total Points: 0 points</div>
+    <div id="game-board"></div>
+    <div id="end-game"></div>
+    <script src="script.js"></script>
+</body>
+</html>
